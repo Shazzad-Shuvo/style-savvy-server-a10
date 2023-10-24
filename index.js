@@ -33,12 +33,19 @@ async function run() {
 
         const database = client.db('styleDB');
         const brandsCollection = database.collection('brands');
-        // const userCollection = database.collection('user');
+        const productsCollection = database.collection('products');
 
-        // brand & image api
+        // brand info api
         app.get('/brands', async(req, res) =>{
             const cursor = brandsCollection.find();
             const result = await cursor.toArray();
+            res.send(result);
+        })
+
+        
+        app.post('/add', async(req, res) =>{
+            const newProduct = req.body;
+            const result = await productsCollection.insertOne(newProduct);
             res.send(result);
         })
 
